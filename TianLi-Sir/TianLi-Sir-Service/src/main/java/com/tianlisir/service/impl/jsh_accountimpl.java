@@ -1,5 +1,6 @@
 package com.tianlisir.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.tianlisir.dao.jsh_accountMapper;
 import com.tianlisir.entity.jsh_account;
 import com.tianlisir.service.Ijsh_account;
@@ -15,6 +16,8 @@ public class jsh_accountimpl implements Ijsh_account {
 
     @Override
     public List<jsh_account> getAll() {
-        return accountMapper.getAll();
+        QueryWrapper queryWrapper = new QueryWrapper();
+        queryWrapper.eq("id",22);
+        return accountMapper.selectList(queryWrapper);
     }
 }
