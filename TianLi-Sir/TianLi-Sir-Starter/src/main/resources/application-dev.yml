@@ -1,0 +1,123 @@
+server:
+  port: 8083
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/jsh_erp?useUnicode=true&characterEncoding=utf8&serverTimezone=UTC
+    username: root
+    password: root
+    type: com.alibaba.druid.pool.DruidDataSource
+  servlet:
+    multipart:
+      max-file-size: 10MB
+      max-request-size: 10MB
+    mail:
+      host: smtp.exmail.qq.com
+      username: service@sunyah.com
+      #    password: oehbvraiyrfkdebi
+      password: N6qQt4k3w2bg848L
+      properties:
+        mail:
+          smtp:
+            auth: true
+            starttls:
+              enable: true
+              required: true
+      receivers: #需要发送的地址(可配置多个）
+        - username: 18866135251@163.com
+        - username: shenxiaoyun@sunyah.com
+        - username: tanjialing@sunyah.com
+    #      - username: nanjiang@sunyah.com
+    #      - username: tanjialing@sunyah.com
+
+    ## quartz定时任务,采用数据库方式
+    quartz:
+      job-store-type: jdbc
+      initialize-schema: embedded
+      #设置自动启动，默认为 true
+      auto-startup: true
+      #启动时更新己存在的Job
+      overwrite-existing-jobs: true
+      properties:
+        org:
+          quartz:
+            scheduler:
+              instanceName: MyScheduler
+              instanceId: AUTO
+            jobStore:
+              class: org.quartz.impl.jdbcjobstore.JobStoreTX
+              driverDelegateClass: org.quartz.impl.jdbcjobstore.StdJDBCDelegate
+              tablePrefix: QRTZ_
+              isClustered: true
+              misfireThreshold: 60000
+              clusterCheckinInterval: 10000
+            threadPool:
+              class: org.quartz.simpl.SimpleThreadPool
+              threadCount: 10
+              threadPriority: 5
+              threadsInheritContextClassLoaderOfInitializingThread: true
+    #json 时间戳统一转换
+    jackson:
+      date-format: yyyy-MM-dd HH:mm:ss
+      time-zone: GMT+8
+    jpa:
+      properties:
+        hibernate:
+          dialect: org.hibernate.dialect.Oracle8iDialect
+
+    #    open-in-view: false
+    activiti:
+      check-process-definitions: false
+      #启用作业执行器
+      async-executor-activate: false
+      #启用异步执行器
+      job-executor-activate: false
+    aop:
+      proxy-target-class: true
+    #配置freemarker
+    freemarker:
+      # 设置模板后缀名
+      suffix: .ftl
+      # 设置文档类型
+      content-type: text/html
+      # 设置页面编码格式
+      charset: UTF-8
+      # 设置页面缓存
+      cache: false
+      prefer-file-system-access: false
+      # 设置ftl文件路径
+      template-loader-path:
+        - classpath:/templates
+    # 设置静态文件路径，js,css等
+    mvc:
+      static-path-pattern: /**
+    resource:
+      static-locations: classpath:/static/,classpath:/public/
+  redis:
+    database: 0
+    host: 127.0.0.1
+    lettuce:
+      pool:
+        max-active: 8   #最大连接数据库连接数,设 0 为没有限制
+        max-idle: 8     #最大等待连接中的数量,设 0 为没有限制
+        max-wait: -1ms  #最大建立连接等待时间。如果超过此时间将接到异常。设为-1表示无限制。
+        min-idle: 0     #最小等待连接中的数量,设 0 为没有限制
+      shutdown-timeout: 100ms
+    password: ''
+    port: 6379
+  #mybatis plus 设置
+mybatis-plus:
+  mapper-locations: classpath*:com/tianlisir/**/xml/*Mapper.xml
+  global-config:
+    # 关闭MP3.0自带的banner
+    banner: false
+    db-config:
+      #主键类型
+      id-type: ASSIGN_ID
+      # 默认数据库表下划线命名
+      table-underline: true
+  configuration:
+    # 这个配置会将执行的sql打印出来，在开发或测试的时候可以用
+    #    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+    # 返回类型为Map,显示null对应的字段
+    call-setters-on-nulls: true
