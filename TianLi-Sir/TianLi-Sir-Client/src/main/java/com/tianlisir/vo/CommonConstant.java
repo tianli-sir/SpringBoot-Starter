@@ -1,4 +1,4 @@
-package com.tianlisir.controller.vo;
+package com.tianlisir.vo;
 
 public interface CommonConstant {
 

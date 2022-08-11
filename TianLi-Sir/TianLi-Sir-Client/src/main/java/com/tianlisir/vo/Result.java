@@ -1,17 +1,16 @@
-package com.tianlisir.controller.vo;
+package com.tianlisir.vo;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
-import com.tianlisir.controller.vo.CommonConstant;
 
 import java.io.Serializable;
 
 /**
  *   接口返回数据格式
  * @author scott
- * @email jeecgos@163.com
+ * @email Another
  * @date  2019年1月19日
  */
 @Data
@@ -52,6 +51,87 @@ public class Result<T> implements Serializable {
 
 	public Result() {
 		
+	}
+//	/**
+//	 * 成功构造器,无返回数据
+//	 */
+//	private Result() {
+//		this(ResultCode.SUCCESS);
+//	}
+
+	/**
+	 * 成功构造器,自定义返回数据
+	 *
+	 * @param data 返回数据
+	 */
+	private Result(T data) {
+		this(ResultCode.SUCCESS, data);
+	}
+
+	/**
+	 * 成功构造器,自定义返回消息,无返回数据
+	 *
+	 * @param msg 返回消息
+	 */
+	private Result(String msg) {
+		this(ResultCode.SUCCESS.getCode(), msg);
+	}
+
+	/**
+	 * 成功构造器,自定义返回信息,返回数据
+	 *
+	 * @param msg  返回信息
+	 * @param data 返回数据
+	 */
+	private Result(String msg, T data) {
+		this(ResultCode.SUCCESS.getCode(), msg, data);
+	}
+
+	/**
+	 * 构造器,自定义状态码,返回消息
+	 *
+	 * @param code 状态码
+	 * @param msg  返回消息
+	 */
+	private Result(int code, String msg) {
+		this.code = code;
+		this.message = msg;
+	}
+
+	/**
+	 * 构造器,自定义状态码,返回消息,返回数据
+	 *
+	 * @param code 状态码
+	 * @param msg  返回消息
+	 * @param data 返回数据
+	 */
+	private Result(int code, String msg, T data) {
+		this(code, msg);
+		this.result = data;
+	}
+
+	/**
+	 * 构造器,使用CodeMsg状态码与返回信息
+	 *
+	 * @param resultCode CodeMsg,参数如下:
+	 *                   <p> code 状态码
+	 *                   <p> msg  返回消息
+	 */
+	private Result(ResultCode resultCode) {
+		this(resultCode.getCode(), resultCode.getMsg());
+	}
+
+	/**
+	 * 构造器,使用CodeMsg状态码与返回信息,自定义返回数据
+	 *
+	 * @param resultCode CodeMsg,参数如下:
+	 *                   <p> code 状态码
+	 *                   <p> msg  返回消息
+	 * @param data       返回数据
+	 */
+	private Result(ResultCode resultCode, T data) {
+		this(resultCode);
+		this.result = data;
 	}
 	
 	public Result<T> success(String message) {
@@ -116,7 +196,20 @@ public class Result<T> implements Serializable {
 	public static Result<Object> error(String msg) {
 		return error(CommonConstant.SC_INTERNAL_SERVER_ERROR_500, msg);
 	}
-	
+	/**
+	 * 失败,使用CodeMsg状态码,返回消息,无返回数据
+	 *
+	 * @param resultCode CodeMsg,参数如下:
+	 *                   <p> code 状态码
+	 *                   <p> msg  返回消息
+	 * @param <T>        返回类泛型
+	 * @return 通用返回Result
+	 */
+	public static <T> Result<T> error(ResultCode resultCode) {
+		return new Result<>(resultCode);
+	}
+
+
 	public static Result<Object> error(int code, String msg) {
 		Result<Object> r = new Result<Object>();
 		r.setCode(code);

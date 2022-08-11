@@ -3,16 +3,17 @@ package com.tianlisir.controller;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.tianlisir.controller.vo.Result;
+import com.tianlisir.vo.Result;
 import com.tianlisir.entity.jsh_log;
 import com.tianlisir.service.Ijsh_log;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.xml.crypto.Data;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -25,11 +26,11 @@ public class jsh_accountController {
     Ijsh_log log;
 
     @ApiOperation("根据条件查询用户")
-    @GetMapping("getById")
+    @GetMapping("/{path}")
     //@PathVariable 获取路径值
-    public Result<?> GetAll(@PathVariable Integer id, @RequestParam(name="pageNo", defaultValue="2") Integer pageNo,
-                            @RequestParam(name="pageSize", defaultValue="5") Integer pageSize,
-                            HttpServletRequest req){
+    public Result<?> GetAll(@PathVariable String path, @RequestParam(name="pageNo", defaultValue="2") Integer pageNo,
+                              @RequestParam(name="pageSize", defaultValue="5") Integer pageSize,
+                              HttpServletRequest req){
         //分页
         QueryWrapper wrapper = new QueryWrapper();
         wrapper.eq("tenant_id",63);
@@ -48,7 +49,7 @@ public class jsh_accountController {
         System.out.println("-----------");
         System.out.println(maps);
         System.out.println("-----------");
-        System.out.println(list);
-        return Result.OK(maps);
+        System.out.println(path);
+        return Result.OK(new Date().toString(),list);
     }
 }
