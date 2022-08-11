@@ -6,24 +6,26 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.tianlisir.controller.vo.Result;
 import com.tianlisir.entity.jsh_log;
 import com.tianlisir.service.Ijsh_log;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 import java.util.Map;
 
-@Component
 @RestController
+@RequestMapping("/test")
+@Api(value = "用户接口", tags = {"用户接口"})
 public class jsh_accountController {
 
     @Autowired
     Ijsh_log log;
-    @GetMapping("/{id}")
+
+    @ApiOperation("根据条件查询用户")
+    @GetMapping("getById")
     //@PathVariable 获取路径值
     public Result<?> GetAll(@PathVariable Integer id, @RequestParam(name="pageNo", defaultValue="2") Integer pageNo,
                             @RequestParam(name="pageSize", defaultValue="5") Integer pageSize,
