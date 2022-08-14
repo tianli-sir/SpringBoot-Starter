@@ -2,4 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.tianlisir.dao.StarterDao">
 
+    <select id="getDelete" resultType="com.tianlisir.entity.Starter">
+        select * from tab_starter where is_history = 1
+    </select>
 </mapper>

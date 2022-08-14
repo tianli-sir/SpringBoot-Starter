@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import springfox.documentation.annotations.ApiIgnore;
 
+import java.util.List;
+
 /**
  * <p>
  *  前端控制器
@@ -58,6 +60,13 @@ public class StarterController {
     private Result<?> testGet(Long id){
         Starter byId = starterService.getById(id);
         return Result.OK(byId);
+    }
+
+    @ApiOperation(value = "获取以删除测试数据value",notes = "获取删除测试数据notes")
+    @GetMapping("testGetDelete")
+    private Result<?> testGetDelete(){
+        List<Starter> delete = starterService.getBaseMapper().getDelete();
+        return Result.OK(delete);
     }
 
 }
