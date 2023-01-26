@@ -13,8 +13,7 @@ spring:
       max-request-size: 10MB
     mail:
       host: smtp.exmail.qq.com
-      username: service@sunyah.com
-      #    password: oehbvraiyrfkdebi
+      username: admin@ostll.com
       password: N6qQt4k3w2bg848L
       properties:
         mail:
@@ -25,11 +24,6 @@ spring:
               required: true
       receivers: #需要发送的地址(可配置多个）
         - username: 18866135251@163.com
-        - username: shenxiaoyun@sunyah.com
-        - username: tanjialing@sunyah.com
-    #      - username: nanjiang@sunyah.com
-    #      - username: tanjialing@sunyah.com
-
     ## quartz定时任务,采用数据库方式
     quartz:
       job-store-type: jdbc
